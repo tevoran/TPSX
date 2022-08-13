@@ -22,10 +22,19 @@ int main()
 
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
-	TPSX_Context *context = TPSX_CreateContext(surface, RESX, RESY);
+	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY);
+	TPSX_PixelRGBA pixel = {255, 255, 255, 255};
+	for(int iy = 100; iy < RESY-100; iy++)
+	{
+		for(int ix = 200; ix < RESX-200; ix++)
+		{
+			TPSX_DrawPixel(context, ix, iy, pixel);
+		}		
+	}
 
 	//show the rendered result
 	SDL_UpdateWindowSurface(window);
+	SDL_Delay(2000);
 
 	//saving the screenshot
 	char filename[100];

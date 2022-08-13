@@ -34,6 +34,11 @@ struct TPSX_Context
 	u16 resy;
 } typedef TPSX_Context;
 
+static inline void TPSX_DrawPixel(TPSX_Context *context, u16 pos_x, u16 pos_y, TPSX_PixelRGBA pixel)
+{
+	context->target_surface[pos_y * context->resx + pos_x] = pixel;
+};
+
 //context
 TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy);
 void TPSX_DestroyContext(TPSX_Context **context);

@@ -1,7 +1,7 @@
 #include "tpsx.h"
 #include <stdlib.h>
 
-TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy)
+TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy, enum TPSX_PixelType type)
 {
 	TPSX_Context *context = malloc(sizeof(TPSX_Context));
 	if(!context)
@@ -17,6 +17,7 @@ TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy)
 	}
 	context->resx = resx;
 	context->resy = resy;
+	context->surface_type = type;
 	return context;
 }
 

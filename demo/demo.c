@@ -22,13 +22,13 @@ int main()
 
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
-	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY);
-	TPSX_PixelRGBA pixel = {255, 255, 255, 255};
+	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
+	TPSX_PixelBGRA pixel = {255, 0, 255, 0};
 	for(int iy = 100; iy < RESY-100; iy++)
 	{
 		for(int ix = 200; ix < RESX-200; ix++)
 		{
-			TPSX_DrawPixel(context, ix, iy, pixel);
+			TPSX_DrawPixelBGRA(context, ix, iy, pixel);
 		}		
 	}
 

@@ -1,20 +1,12 @@
 #ifndef TPSX_DATATYPES_H
 #define TPSX_DATATYPES_H
 
-#include <inttypes.h>
 #include <math.h>
+#include <Tlib/inttypes.h>
+#include <Tlib/math.h>
 
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-typedef int8_t i8;
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
-
-#define TPSX_VALID true;
-#define TPSX_NOT_VALID false;
+#define TPSX_VALID true
+#define TPSX_NOT_VALID false
 
 //pixel
 struct TPSX_PixelRGBA
@@ -35,5 +27,13 @@ struct TPSX_PixelBGRA
 typedef u32 TPSX_Pixel32; //generic pixel
 
 enum TPSX_PixelType {TPSX_RGBA, TPSX_BGRA};
+
+//vertex
+struct TPSX_Vertex
+{
+	T_vec3 pos;
+	T_vec3 normal;
+	T_vec2 tex_coord;
+} typedef TPSX_Vertex;
 
 #endif /* TPSX_DATATYPES_H */

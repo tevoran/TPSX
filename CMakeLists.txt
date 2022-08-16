@@ -21,6 +21,7 @@ include(FindPkgConfig)
 find_package(SDL2 REQUIRED)
 
 include_directories(vendor/stb/)
+include_directories(vendor/Tlib/)
 include_directories(src/)
 
 file(GLOB_RECURSE "TPSX_code" SRC src/*.c)

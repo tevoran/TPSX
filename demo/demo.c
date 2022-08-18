@@ -23,14 +23,28 @@ int main()
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
 	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
-	TPSX_PixelBGRA pixel = {255, 0, 255, 0};
-	for(int iy = 100; iy < RESY-100; iy++)
+
+	TPSX_Vertex vert[3];
+	vert[0].pos.x = 0.9f;
+	vert[0].pos.y = 0.1f;
+	vert[0].pos.z = 0.1f;
+
+	vert[1].pos.x = 0.2f;
+	vert[1].pos.y = 0.3f;
+	vert[1].pos.z = 0.1f;
+
+	vert[2].pos.x = 0.1f;
+	vert[2].pos.y = 0.9f;
+	vert[2].pos.z = 0.1f;
+
+	T_mat4 mat =
 	{
-		for(int ix = 200; ix < RESX-200; ix++)
-		{
-			TPSX_DrawPixelBGRA(context, ix, iy, pixel);
-		}		
-	}
+		0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f
+	};
+	TPSX_RenderMesh(context, vert, 3, &mat, 1);
 
 	//show the rendered result
 	SDL_UpdateWindowSurface(window);

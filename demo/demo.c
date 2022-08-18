@@ -24,8 +24,8 @@ int main()
 
 	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
 
-	TPSX_Vertex vert[3];
-	vert[0].pos.x = 0.9f;
+	TPSX_Vertex vert[6];
+	vert[0].pos.x = 0.4f;
 	vert[0].pos.y = 0.1f;
 	vert[0].pos.z = 0.1f;
 
@@ -37,6 +37,18 @@ int main()
 	vert[2].pos.y = 0.9f;
 	vert[2].pos.z = 0.1f;
 
+	vert[3].pos.x = 0.5f;
+	vert[3].pos.y = 0.1f;
+	vert[3].pos.z = 0.1f;
+
+	vert[4].pos.x = 0.9f;
+	vert[4].pos.y = 0.3f;
+	vert[4].pos.z = 0.1f;
+
+	vert[5].pos.x = 0.5f;
+	vert[5].pos.y = 0.9f;
+	vert[5].pos.z = 0.1f;
+
 	T_mat4 mat =
 	{
 		0.0f, 0.0f, 0.0f, 0.0f,
@@ -44,7 +56,7 @@ int main()
 		0.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 0.0f
 	};
-	TPSX_RenderMesh(context, vert, 3, &mat, 1);
+	TPSX_RenderMesh(context, vert, 6, &mat, 1);
 
 	//show the rendered result
 	SDL_UpdateWindowSurface(window);

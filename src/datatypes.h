@@ -36,4 +36,13 @@ struct TPSX_Vertex
 	T_vec2 tex_coord;
 } typedef TPSX_Vertex;
 
+//texture
+struct TPSX_Texture
+{
+	u8 resx;
+	u8 resy;
+	TPSX_Pixel32 *pixels;
+	enum TPSX_PixelType type;
+} typedef TPSX_Texture;
+
 #endif /* TPSX_DATATYPES_H */

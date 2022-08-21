@@ -24,6 +24,17 @@ int main()
 
 	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
 
+	TPSX_Texture tex;
+	TPSX_PixelBGRA tex_pixel[2][2] =
+	{
+		255, 0, 255, 255,	0, 255, 0, 255,
+		0, 255, 0, 255,		255, 0, 255, 255,
+	};
+	tex.resx = 2;
+	tex.resy = 2;
+	tex.pixels = (TPSX_Pixel32*)tex_pixel;
+	tex.type = TPSX_BGRA;
+
 	TPSX_Vertex vert[6];
 	vert[0].pos.x = 0.4f;
 	vert[0].pos.y = 0.1f;

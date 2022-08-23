@@ -39,8 +39,8 @@ struct TPSX_Vertex
 //texture
 struct TPSX_Texture
 {
-	u8 resx;
-	u8 resy;
+	u8 width;
+	u8 height;
 	TPSX_Pixel32 *pixels;
 	enum TPSX_PixelType type;
 } typedef TPSX_Texture;

@@ -2,6 +2,7 @@
 #define TPSX_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include "datatypes.h"
 
 struct TPSX_Context
@@ -25,12 +26,23 @@ TPSX_Context* TPSX_CreateContext(
     enum TPSX_PixelType type);
 void TPSX_DestroyContext(TPSX_Context **context);
 
-//render
+//textures
+TPSX_Texture* TPSX_CreateTexture(
+    TPSX_Pixel32 *surface,
+    u8 width,
+    u8 height,
+    enum TPSX_PixelType type);
+void TPSX_DestroyTexture(TPSX_Texture **texture);
+TPSX_PixelRGBA TPSX_SampleFromTextureRGBA(TPSX_Texture *texture, T_vec2 pos);
+TPSX_PixelBGRA TPSX_SampleFromTextureBGRA(TPSX_Texture *texture, T_vec2 pos);
+
+//renderer
 void TPSX_RenderMesh(
     TPSX_Context *context,
     TPSX_Vertex *verts,
     u32 num_verts,
     T_mat4 *transforms,
-    u32 num_transforms);
+    u32 num_transforms,
+    TPSX_Texture *tex);
 
 #endif /* TPSX_H */

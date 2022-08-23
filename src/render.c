@@ -5,7 +5,8 @@ void TPSX_RenderMesh(
     TPSX_Vertex *verts,
     u32 num_verts,
     T_mat4 *transforms,
-    u32 num_transforms)
+    u32 num_transforms,
+    TPSX_Texture *tex)
 {
 	if(!context)
 	{
@@ -62,12 +63,33 @@ void TPSX_RenderMesh(
 			{
 				current.x = ix;
 				current.y = iy;
+
 				T_vec3 bary = T_get_barycentric_coords(v0, v1, v2, current);
-				if(	bary.x >= 0.0f &&
-					bary.y >= 0.0f &&
-					bary.z >= 0.0f)
+				if(	bary.x > 0.0f &&
+					bary.y > 0.0f &&
+					bary.z > 0.0f)
 				{
-					TPSX_DrawPixelBGRA(context, ix, iy, pixel);
+					if(!tex)
+					{
+						TPSX_DrawPixelBGRA(context, ix, iy, pixel);
+					}
+					else
+					{
+						T_vec2 tex_pos;
+						tex_pos.u =
+							verts[i].tex_coord.u * bary.x +
+							verts[i+1].tex_coord.u * bary.y +
+							verts[i+2].tex_coord.u * bary.z;
+						tex_pos.v =
+							verts[i].tex_coord.v * bary.x +
+							verts[i+1].tex_coord.v * bary.y +
+							verts[i+2].tex_coord.v * bary.z;
+
+						TPSX_PixelBGRA texel = TPSX_SampleFromTextureBGRA(
+							tex,
+							tex_pos);
+						TPSX_DrawPixelBGRA(context, ix, iy, texel);
+					}
 				}
 			}
 		}		

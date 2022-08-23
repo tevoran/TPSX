@@ -1,5 +1,4 @@
 #include "tpsx.h"
-#include <stdlib.h>
 
 TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy, enum TPSX_PixelType type)
 {

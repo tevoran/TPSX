@@ -44,7 +44,7 @@ void TPSX_DestroyTexture(TPSX_Texture **texture)
 	*texture = NULL;
 }
 
-/*
+
 TPSX_PixelRGBA TPSX_SampleFromTextureRGBA(TPSX_Texture *texture, T_vec2 pos)
 {
 	TPSX_PixelRGBA pixel = { 255, 0, 255, 255};
@@ -54,18 +54,16 @@ TPSX_PixelRGBA TPSX_SampleFromTextureRGBA(TPSX_Texture *texture, T_vec2 pos)
 	}
 
 	//repeat the texture if the values are above 1.0f
-	pos.x = pos.x - (f32)(u32)pos.x;
-	pos.y = pos.y - (f32)(u32)pos.y;
-	u32 tex_pos_x = (f32)texture->width * pos.x;
-	u32 tex_pos_y = (f32)texture->height * pos.y;
+	T_vec2 pos_repeated;
+	pos_repeated.x = pos.x - (f32)(u32)pos.x;
+	pos_repeated.y = pos.y - (f32)(u32)pos.y;
+	u32 tex_pos_x = (f32)texture->width * pos_repeated.x;
+	u32 tex_pos_y = (f32)texture->height * pos_repeated.y;
 	if(texture->type == TPSX_RGBA)
 	{
 		TPSX_PixelRGBA *texel = (TPSX_PixelRGBA*)texture->pixels;
 		texel += tex_pos_y * texture->width + tex_pos_x;
-		pixel.r = texel->r;
-		pixel.g = texel->g;
-		pixel.b = texel->b;
-		pixel.a = texel->a;
+		pixel = *texel;
 	}
 	else
 	{
@@ -79,7 +77,7 @@ TPSX_PixelRGBA TPSX_SampleFromTextureRGBA(TPSX_Texture *texture, T_vec2 pos)
 	}
 	return pixel;
 }
-*/
+
 
 TPSX_PixelBGRA TPSX_SampleFromTextureBGRA(TPSX_Texture *texture, T_vec2 pos)
 {
@@ -99,10 +97,7 @@ TPSX_PixelBGRA TPSX_SampleFromTextureBGRA(TPSX_Texture *texture, T_vec2 pos)
 	{
 		TPSX_PixelBGRA *texel = (TPSX_PixelBGRA*)texture->pixels;
 		texel += tex_pos_y * texture->width + tex_pos_x;
-		pixel.r = texel->r;
-		pixel.g = texel->g;
-		pixel.b = texel->b;
-		pixel.a = texel->a;
+		pixel = *texel;
 	}
 	else
 	{

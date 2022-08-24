@@ -22,7 +22,7 @@ int main()
 
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
-	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
+	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_RGBA);
 
 	TPSX_PixelBGRA white = {255, 255, 255, 255};
 	TPSX_PixelBGRA red = {0, 0, 255, 255};
@@ -40,7 +40,7 @@ int main()
 		TPSX_BGRA);
 
 	TPSX_Vertex vert[6];
-	vert[0].pos.x = 0.4f;
+	vert[0].pos.x = 0.9f;
 	vert[0].pos.y = 0.1f;
 	vert[0].pos.z = 0.1f;
 	vert[0].tex_coord.u = 0.0f;
@@ -61,19 +61,19 @@ int main()
 	vert[3].pos.x = 0.5f;
 	vert[3].pos.y = 0.1f;
 	vert[3].pos.z = 0.1f;
-	vert[3].tex_coord.u = 1.0f;
-	vert[3].tex_coord.v = 1.0f;
+	vert[3].tex_coord.u = 5.0f;
+	vert[3].tex_coord.v = 5.0f;
 
 	vert[4].pos.x = 0.9f;
 	vert[4].pos.y = 0.3f;
 	vert[4].pos.z = 0.1f;
 	vert[4].tex_coord.u = 0.0f;
-	vert[4].tex_coord.v = 1.0f;
+	vert[4].tex_coord.v = 5.0f;
 
 	vert[5].pos.x = 0.5f;
 	vert[5].pos.y = 0.9f;
 	vert[5].pos.z = 0.1f;
-	vert[5].tex_coord.u = 1.0f;
+	vert[5].tex_coord.u = 5.0f;
 	vert[5].tex_coord.v = 0.0f;
 
 	T_mat4 mat =

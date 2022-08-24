@@ -11,7 +11,7 @@ struct TPSX_Context
 
 	//render target
 	TPSX_Pixel32 *target_surface;
-    enum TPSX_PixelType surface_type;
+    enum TPSX_PixelType type;
 	u16 resx;
 	u16 resy;
 } typedef TPSX_Context;
@@ -41,8 +41,6 @@ void TPSX_RenderMesh(
     TPSX_Context *context,
     TPSX_Vertex *verts,
     u32 num_verts,
-    T_mat4 *transforms,
-    u32 num_transforms,
     TPSX_Texture *tex);
 
 #endif /* TPSX_H */

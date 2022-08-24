@@ -4,8 +4,6 @@ void TPSX_RenderMesh(
     TPSX_Context *context,
     TPSX_Vertex *verts,
     u32 num_verts,
-    T_mat4 *transforms,
-    u32 num_transforms,
     TPSX_Texture *tex)
 {
 	if(!context)
@@ -21,14 +19,6 @@ void TPSX_RenderMesh(
 		return;
 	}
 	if(!num_verts)
-	{
-		return;
-	}
-	if(!transforms)
-	{
-		return;
-	}
-	if(!num_transforms)
 	{
 		return;
 	}
@@ -56,7 +46,8 @@ void TPSX_RenderMesh(
 		max.y = (u32)T_f_max(max.y, v2.y) + 1;
 
 		//render loop
-		TPSX_PixelBGRA pixel = {255, 0, 255, 0};
+		TPSX_PixelBGRA pixel_bgra = {255, 0, 255, 0};
+		TPSX_PixelRGBA pixel_rgba = {255, 0, 255, 0};
 		for(int iy = min.y; iy < max.y; iy++)
 		{
 			for(int ix = min.x; ix < max.x; ix++)
@@ -71,7 +62,14 @@ void TPSX_RenderMesh(
 				{
 					if(!tex)
 					{
-						TPSX_DrawPixelBGRA(context, ix, iy, pixel);
+						if(context->type == TPSX_BGRA)
+						{
+							TPSX_DrawPixelBGRA(context, ix, iy, pixel_bgra);
+						}
+						else
+						{
+							TPSX_DrawPixelRGBA(context, ix, iy, pixel_rgba);
+						}
 					}
 					else
 					{
@@ -85,10 +83,21 @@ void TPSX_RenderMesh(
 							verts[i+1].tex_coord.v * bary.y +
 							verts[i+2].tex_coord.v * bary.z;
 
-						TPSX_PixelBGRA texel = TPSX_SampleFromTextureBGRA(
-							tex,
-							tex_pos);
-						TPSX_DrawPixelBGRA(context, ix, iy, texel);
+						if(context->type == TPSX_BGRA)
+						{
+							TPSX_PixelBGRA texel = TPSX_SampleFromTextureBGRA(
+								tex,
+								tex_pos);
+							TPSX_DrawPixelBGRA(context, ix, iy, texel);
+						}
+						else
+						{
+							TPSX_PixelRGBA texel = TPSX_SampleFromTextureRGBA(
+								tex,
+								tex_pos);
+							TPSX_DrawPixelRGBA(context, ix, iy, texel);
+						}
+
 					}
 				}
 			}

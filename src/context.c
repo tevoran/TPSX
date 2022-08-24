@@ -16,7 +16,7 @@ TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy, enum T
 	}
 	context->resx = resx;
 	context->resy = resy;
-	context->surface_type = type;
+	context->type = type;
 	return context;
 }
 

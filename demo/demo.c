@@ -22,10 +22,11 @@ int main()
 
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
-	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_RGBA);
+	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
+	TPSX_ClearRenderTarget(context);
 
-	TPSX_PixelBGRA white = {255, 255, 255, 255};
-	TPSX_PixelBGRA red = {0, 0, 255, 255};
+	TPSX_PixelBGRA white = {255, 255, 255, 64};
+	TPSX_PixelBGRA red = {0, 0, 255, 32};
 
 	TPSX_PixelBGRA tex_pixel[2][2] =
 	{
@@ -50,12 +51,12 @@ int main()
 	vert[1].pos.y = 0.3f;
 	vert[1].pos.z = 0.1f;
 	vert[1].tex_coord.u = 0.0f;
-	vert[1].tex_coord.v = 1.0f;
+	vert[1].tex_coord.v = 35.0f;
 
 	vert[2].pos.x = 0.1f;
 	vert[2].pos.y = 0.9f;
 	vert[2].pos.z = 0.1f;
-	vert[2].tex_coord.u = 1.0f;
+	vert[2].tex_coord.u = 3.0f;
 	vert[2].tex_coord.v = 0.0f;
 
 	vert[3].pos.x = 0.5f;
@@ -83,7 +84,7 @@ int main()
 		0.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 0.0f
 	};
-	TPSX_RenderMesh(context, vert, 6, &mat, 1, tex);
+	TPSX_RenderMesh(context, vert, 6, tex);
 
 	//show the rendered result
 	SDL_UpdateWindowSurface(window);

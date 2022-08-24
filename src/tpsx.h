@@ -25,6 +25,7 @@ TPSX_Context* TPSX_CreateContext(
     u16 resy,
     enum TPSX_PixelType type);
 void TPSX_DestroyContext(TPSX_Context **context);
+void TPSX_ClearRenderTarget(TPSX_Context *context);
 
 //textures
 TPSX_Texture* TPSX_CreateTexture(

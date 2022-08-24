@@ -31,3 +31,28 @@ void TPSX_DestroyContext(TPSX_Context **context)
 	free(*context);
 	*context = NULL;
 }
+
+void TPSX_ClearRenderTarget(TPSX_Context *context)
+{
+	TPSX_PixelBGRA pixel_bgra = {0,0,0,255};
+	TPSX_PixelRGBA pixel_rgba = {0,0,0,255};
+	TPSX_PixelBGRA *ptr_bgra = (TPSX_PixelBGRA*)context->target_surface;
+	TPSX_PixelRGBA *ptr_rgba = (TPSX_PixelRGBA*)context->target_surface;
+	if(context->type == TPSX_BGRA)
+	{
+		for(u32 i = 0; i < context->resx * context->resy; i++)
+		{
+			*ptr_bgra = pixel_bgra;
+			ptr_bgra++;
+		}
+	}
+	else
+	{
+		for(u32 i = 0; i < context->resx * context->resy; i++)
+		{
+			*ptr_rgba = pixel_rgba;
+			ptr_rgba++;
+		}
+
+	}
+}

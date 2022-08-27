@@ -83,7 +83,7 @@ int main()
 	vert[6].tex_coord.u = 3.0f;
 	vert[6].tex_coord.v = 3.0f;
 
-	vert[7].pos.x = 1.0f;
+	vert[7].pos.x = 1.2f;
 	vert[7].pos.y = 1.0f;
 	vert[7].pos.z = 1.0f;
 	vert[7].tex_coord.u = 0.0f;

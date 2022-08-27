@@ -44,4 +44,7 @@ void TPSX_RenderMesh(
     u32 num_verts,
     TPSX_Texture *tex);
 
+//misc
+void TPSX_SortTriangles(TPSX_Vertex *verts, u32 num_verts);
+
 #endif /* TPSX_H */

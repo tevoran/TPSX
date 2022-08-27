@@ -25,8 +25,8 @@ int main()
 	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
 	TPSX_ClearRenderTarget(context);
 
-	TPSX_PixelBGRA white = {255, 255, 255, 64};
-	TPSX_PixelBGRA red = {0, 0, 255, 32};
+	TPSX_PixelBGRA white = {255, 255, 255, 240};
+	TPSX_PixelBGRA red = {0, 0, 255, 255};
 
 	TPSX_PixelBGRA tex_pixel[2][2] =
 	{
@@ -40,22 +40,22 @@ int main()
 		2, 
 		TPSX_BGRA);
 
-	TPSX_Vertex vert[6];
+	TPSX_Vertex vert[9];
 	vert[0].pos.x = 0.9f;
 	vert[0].pos.y = 0.1f;
-	vert[0].pos.z = 0.1f;
+	vert[0].pos.z = 0.5f;
 	vert[0].tex_coord.u = 0.0f;
 	vert[0].tex_coord.v = 0.0f;
 
 	vert[1].pos.x = 0.2f;
 	vert[1].pos.y = 0.3f;
-	vert[1].pos.z = 0.1f;
+	vert[1].pos.z = 0.5f;
 	vert[1].tex_coord.u = 0.0f;
 	vert[1].tex_coord.v = 35.0f;
 
 	vert[2].pos.x = 0.1f;
 	vert[2].pos.y = 0.9f;
-	vert[2].pos.z = 0.1f;
+	vert[2].pos.z = 0.5f;
 	vert[2].tex_coord.u = 3.0f;
 	vert[2].tex_coord.v = 0.0f;
 
@@ -77,6 +77,26 @@ int main()
 	vert[5].tex_coord.u = 5.0f;
 	vert[5].tex_coord.v = 0.0f;
 
+	vert[6].pos.x = 1.0f;
+	vert[6].pos.y = 0.0f;
+	vert[6].pos.z = 1.0f;
+	vert[6].tex_coord.u = 3.0f;
+	vert[6].tex_coord.v = 3.0f;
+
+	vert[7].pos.x = 1.0f;
+	vert[7].pos.y = 1.0f;
+	vert[7].pos.z = 1.0f;
+	vert[7].tex_coord.u = 0.0f;
+	vert[7].tex_coord.v = 3.0f;
+
+	vert[8].pos.x = 0.0f;
+	vert[8].pos.y = 0.3f;
+	vert[8].pos.z = 1.0f;
+	vert[8].tex_coord.u = 3.0f;
+	vert[8].tex_coord.v = 0.0f;
+
+	TPSX_SortTriangles(vert, 9);
+
 	T_mat4 mat =
 	{
 		0.0f, 0.0f, 0.0f, 0.0f,
@@ -84,7 +104,7 @@ int main()
 		0.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 0.0f
 	};
-	TPSX_RenderMesh(context, vert, 6, tex);
+	TPSX_RenderMesh(context, vert, 9, tex);
 
 	//show the rendered result
 	SDL_UpdateWindowSurface(window);

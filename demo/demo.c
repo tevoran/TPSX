@@ -12,6 +12,10 @@ int main()
 	{
 		printf("[ERROR] couldn't initialize SDL2");
 	}
+
+	SDL_DisplayMode dm;
+	SDL_GetDesktopDisplayMode(0, &dm);
+
 	SDL_Window *window = SDL_CreateWindow(
 		"TPSX demo",
 		SDL_WINDOWPOS_CENTERED,
@@ -23,7 +27,6 @@ int main()
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 
 	TPSX_Context *context = TPSX_CreateContext(surface->pixels, RESX, RESY, TPSX_BGRA);
-	TPSX_ClearRenderTarget(context);
 
 	TPSX_PixelBGRA white = {255, 255, 255, 240};
 	TPSX_PixelBGRA red = {0, 0, 255, 255};
@@ -40,7 +43,27 @@ int main()
 		2, 
 		TPSX_BGRA);
 
-	TPSX_Vertex vert[9];
+	const u32 num_verts = 9;
+	TPSX_Vertex vert[num_verts];
+/*	vert[0].pos.x = 0.9f;
+	vert[0].pos.y = 0.1f;
+	vert[0].pos.z = 0.5f;
+	vert[0].tex_coord.u = 0.0f;
+	vert[0].tex_coord.v = 0.0f;
+
+	vert[1].pos.x = 0.2f;
+	vert[1].pos.y = 0.3f;
+	vert[1].pos.z = 0.5f;
+	vert[1].tex_coord.u = 0.0f;
+	vert[1].tex_coord.v = 35.0f;
+
+	vert[2].pos.x = 0.1f;
+	vert[2].pos.y = 0.9f;
+	vert[2].pos.z = 0.5f;
+	vert[2].tex_coord.u = 3.0f;
+	vert[2].tex_coord.v = 0.0f;
+*/
+
 	vert[0].pos.x = 0.9f;
 	vert[0].pos.y = 0.1f;
 	vert[0].pos.z = 0.5f;
@@ -95,20 +118,53 @@ int main()
 	vert[8].tex_coord.u = 3.0f;
 	vert[8].tex_coord.v = 0.0f;
 
-	TPSX_SortTriangles(vert, 9);
 
-	T_mat4 mat =
+	T_mat4 translate =
 	{
-		0.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f
+		1.0f, 0.0f, 0.0f, 0.5f,
+		0.0f, 1.0f, 0.0f, 0.5f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f,			
 	};
-	TPSX_RenderMesh(context, vert, 9, tex);
 
-	//show the rendered result
-	SDL_UpdateWindowSurface(window);
-	SDL_Delay(2000);
+	T_mat4 back_translate =
+	{
+		1.0f, 0.0f, 0.0f, -0.5f,
+		0.0f, 1.0f, 0.0f, -0.5f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f,			
+	};
+
+	TPSX_Vertex vert_translated[num_verts];
+	TPSX_Vertex vert_rotated[num_verts];
+	TPSX_Vertex vert_transformed[num_verts];
+
+	f32 angle = 0.0f;
+	u32 frames = 0;
+	while(frames < 10000)
+	{
+		frames++;
+		TPSX_ClearRenderTarget(context);
+		angle+= 0.01f;
+		T_mat4 rot =
+		{
+			cos(angle), -sin(angle), 0.0f, 0.0f,
+			sin(angle), cos(angle), 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f,
+		};
+
+		TPSX_TransformVertices(vert, vert_translated, num_verts, back_translate);
+		TPSX_TransformVertices(vert_translated, vert_rotated, num_verts, rot);
+		TPSX_TransformVertices(vert_rotated, vert_transformed, num_verts, translate);
+		TPSX_SortTriangles(vert, num_verts);
+		TPSX_RenderMesh(context, vert_transformed, num_verts, tex);
+
+		//show the rendered result
+		SDL_UpdateWindowSurface(window);
+		SDL_Delay(15);
+		//break;
+	}
 
 	//saving the screenshot
 	char filename[100];
@@ -122,6 +178,12 @@ int main()
 	{
 		printf("[ERROR] context wasn't destroyed\n");
 	}
+
+	//reset to the original desktop resolution
+	SDL_SetWindowSize(
+		window,
+		dm.w,
+		dm.h);
 
 	//quit
 	SDL_Quit();

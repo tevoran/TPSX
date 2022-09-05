@@ -27,6 +27,13 @@ TPSX_Context* TPSX_CreateContext(
 void TPSX_DestroyContext(TPSX_Context **context);
 void TPSX_ClearRenderTarget(TPSX_Context *context);
 
+//transformations
+void TPSX_TransformVertices(
+    TPSX_Vertex *verts_in, 
+    TPSX_Vertex *verts_out, 
+    u32 num_verts,
+    T_mat4 transform_matrix);
+
 //textures
 TPSX_Texture* TPSX_CreateTexture(
     TPSX_Pixel32 *surface,

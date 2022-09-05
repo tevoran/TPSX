@@ -36,38 +36,38 @@ void TPSX_RenderMesh(
 
 		//bounding box
 		T_vec2 min, max;
-		min.x = (u32)T_f_min(v0.x, v1.x);
-		min.x = (u32)T_f_min(min.x, v2.x);
-		min.y = (u32)T_f_min(v0.y, v1.y);
-		min.y = (u32)T_f_min(min.y, v2.y);
-		max.x = (u32)T_f_max(v0.x, v1.x) + 1;
-		max.x = (u32)T_f_max(max.x, v2.x) + 1;
-		max.y = (u32)T_f_max(v0.y, v1.y) + 1;
-		max.y = (u32)T_f_max(max.y, v2.y) + 1;
+		min.x = (i32)T_f_min(v0.x, v1.x);
+		min.x = (i32)T_f_min(min.x, v2.x);
+		min.y = (i32)T_f_min(v0.y, v1.y);
+		min.y = (i32)T_f_min(min.y, v2.y);
+		max.x = (i32)T_f_max(v0.x, v1.x) + 1;
+		max.x = (i32)T_f_max(max.x, v2.x) + 1;
+		max.y = (i32)T_f_max(v0.y, v1.y) + 1;
+		max.y = (i32)T_f_max(max.y, v2.y) + 1;
 
 		//stop if triangle is outside the screen
 		if(max.x < 0.0f)
 		{
-			return;
+			continue;
 		}		
 		if(max.y < 0.0f)
 		{
-			return;
+			continue;
 		}
 		if(min.x > context->resx)
 		{
-			return;
+			continue;
 		}
 		if(min.y > context->resy)
 		{
-			return;
+			continue;
 		}
 
 		//crop bounding box to the surface if necessary
-		min.x = (u32)T_f_max(min.x, 0);
-		min.y = (u32)T_f_max(min.y, 0);
-		max.x = (u32)T_f_min(max.x, context->resx);
-		max.y = (u32)T_f_min(max.y, context->resy);
+		min.x = (i32)T_f_max(min.x, 0);
+		min.y = (i32)T_f_max(min.y, 0);
+		max.x = (i32)T_f_min(max.x, context->resx);
+		max.y = (i32)T_f_min(max.y, context->resy);
 
 		//render loop
 		TPSX_PixelBGRA pixel_bgra = {255, 0, 255, 0};

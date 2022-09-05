@@ -1,5 +1,5 @@
-#ifndef TPSX_PIXEL
-#define TPSX_PIXEL
+#ifndef TPSX_PIXEL_H
+#define TPSX_PIXEL_H
 
 #include "tpsx.h"
 
@@ -23,4 +23,4 @@ static inline void TPSX_DrawPixelBGRA(TPSX_Context *context, u16 pos_x, u16 pos_
     surface->a = surface->a * (1.0f - pixel.a * 1.0f/255.0f) + pixel.a * (pixel.a * 1.0f/255.0f);
 };
 
-#endif /* TPSX_PIXEL */
+#endif /* TPSX_PIXEL_H */

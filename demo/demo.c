@@ -45,24 +45,6 @@ int main()
 
 	const u32 num_verts = 9;
 	TPSX_Vertex vert[num_verts];
-/*	vert[0].pos.x = 0.9f;
-	vert[0].pos.y = 0.1f;
-	vert[0].pos.z = 0.5f;
-	vert[0].tex_coord.u = 0.0f;
-	vert[0].tex_coord.v = 0.0f;
-
-	vert[1].pos.x = 0.2f;
-	vert[1].pos.y = 0.3f;
-	vert[1].pos.z = 0.5f;
-	vert[1].tex_coord.u = 0.0f;
-	vert[1].tex_coord.v = 35.0f;
-
-	vert[2].pos.x = 0.1f;
-	vert[2].pos.y = 0.9f;
-	vert[2].pos.z = 0.5f;
-	vert[2].tex_coord.u = 3.0f;
-	vert[2].tex_coord.v = 0.0f;
-*/
 
 	vert[0].pos.x = 0.9f;
 	vert[0].pos.y = 0.1f;
@@ -78,7 +60,7 @@ int main()
 
 	vert[2].pos.x = 0.1f;
 	vert[2].pos.y = 0.9f;
-	vert[2].pos.z = 0.5f;
+	vert[2].pos.z = -1.5f;
 	vert[2].tex_coord.u = 3.0f;
 	vert[2].tex_coord.v = 0.0f;
 
@@ -96,7 +78,7 @@ int main()
 
 	vert[5].pos.x = 0.5f;
 	vert[5].pos.y = 0.9f;
-	vert[5].pos.z = 0.1f;
+	vert[5].pos.z = 1.1f;
 	vert[5].tex_coord.u = 5.0f;
 	vert[5].tex_coord.v = 0.0f;
 
@@ -141,7 +123,7 @@ int main()
 
 	f32 angle = 0.0f;
 	u32 frames = 0;
-	while(frames < 10000)
+	while(frames < 1000)
 	{
 		frames++;
 		TPSX_ClearRenderTarget(context);
@@ -162,8 +144,7 @@ int main()
 
 		//show the rendered result
 		SDL_UpdateWindowSurface(window);
-		SDL_Delay(15);
-		//break;
+		printf("FRAME: %i\n", frames);
 	}
 
 	//saving the screenshot

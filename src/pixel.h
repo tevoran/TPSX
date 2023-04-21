@@ -9,20 +9,22 @@ static inline void TPSX_DrawPixelRGBA(void *pixel_ptr, TPSX_PixelRGBA pixel)
 {
     TPSX_PixelRGBA *surface = (TPSX_PixelRGBA*)pixel_ptr;
     float factor = pixel.a * INV_255;
-    surface->r = surface->r * (1.0f - factor) + pixel.r * factor;
-    surface->g = surface->g * (1.0f - factor) + pixel.g * factor;
-    surface->b = surface->b * (1.0f - factor) + pixel.b * factor;
-    surface->a = surface->a * (1.0f - factor) + pixel.a * factor;
+    float factor2 = 1.0f - pixel.a * INV_255;
+    surface->r = surface->r * factor2 + pixel.r * factor;
+    surface->g = surface->g * factor2+ pixel.g * factor;
+    surface->b = surface->b * factor2 + pixel.b * factor;
+    surface->a = surface->a * factor2 + pixel.a * factor;
 };
 
 static inline void TPSX_DrawPixelBGRA(void *pixel_ptr, TPSX_PixelBGRA pixel)
 {
     TPSX_PixelBGRA *surface = (TPSX_PixelBGRA*)pixel_ptr;
     float factor = pixel.a * INV_255;
-    surface->r = surface->r * (1.0f - factor) + pixel.r * factor;
-    surface->g = surface->g * (1.0f - factor) + pixel.g * factor;
-    surface->b = surface->b * (1.0f - factor) + pixel.b * factor;
-    surface->a = surface->a * (1.0f - factor) + pixel.a * factor;
+    float factor2 = 1.0f - pixel.a * INV_255;
+    surface->r = surface->r * factor2 + pixel.r * factor;
+    surface->g = surface->g * factor2 + pixel.g * factor;
+    surface->b = surface->b * factor2 + pixel.b * factor;
+    surface->a = surface->a * factor2 + pixel.a * factor;
 };
 
 #endif /* TPSX_PIXEL_H */

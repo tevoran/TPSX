@@ -57,6 +57,8 @@ static inline void TPSX_RenderTriangle(
 	TPSX_PixelRGBA pixel_rgba = {255, 0, 255, 0};
 	for(int iy = min.y; iy < max.y; iy++)
 	{
+		bool in_line = false;
+
 		for(int ix = min.x; ix < max.x; ix++)
 		{
 			current.x = ix;
@@ -67,6 +69,8 @@ static inline void TPSX_RenderTriangle(
 				bary.y > 0.0f &&
 				bary.z > 0.0f)
 			{
+				in_line = true;
+
 				//do clipping through the near and the far plane
 				f32 z = bary.x * v0_in.pos.z +
 					bary.y * v1_in.pos.z +
@@ -117,6 +121,13 @@ static inline void TPSX_RenderTriangle(
 							tex_pos);
 						TPSX_DrawPixelRGBA(context, ix, iy, texel);
 					}
+				}
+			}
+			else
+			{
+				if(in_line)
+				{
+					break;
 				}
 			}
 		}

@@ -123,6 +123,7 @@ int main()
 
 	f32 angle = 0.0f;
 	u32 frames = 0;
+	float ms_before = SDL_GetTicks();
 	while(frames < 1000)
 	{
 		frames++;
@@ -144,8 +145,13 @@ int main()
 
 		//show the rendered result
 		SDL_UpdateWindowSurface(window);
-		printf("FRAME: %i\n", frames);
 	}
+	float ms_after = SDL_GetTicks();
+	float ms = ms_after - ms_before;
+	printf("FRAMES: %i\n", frames);
+
+	printf("ms per frame on avg: %f ms\n", ms/frames);
+	printf("total render time: %f ms\n", ms);
 
 	//saving the screenshot
 	char filename[100];

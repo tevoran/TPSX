@@ -1,4 +1,5 @@
 #include "tpsx.h"
+#include <string.h>
 
 TPSX_Context* TPSX_CreateContext(void *render_target, u16 resx, u16 resy, enum TPSX_PixelType type)
 {
@@ -32,27 +33,12 @@ void TPSX_DestroyContext(TPSX_Context **context)
 	*context = NULL;
 }
 
+/* it might be necessary to set a certain alpha value if issues arise */
 void TPSX_ClearRenderTarget(TPSX_Context *context)
 {
-	TPSX_PixelBGRA pixel_bgra = {0,0,0,255};
-	TPSX_PixelRGBA pixel_rgba = {0,0,0,255};
+	TPSX_PixelBGRA pixel_bgra = {0,0,0,0};
+	TPSX_PixelRGBA pixel_rgba = {0,0,0,0};
 	TPSX_PixelBGRA *ptr_bgra = (TPSX_PixelBGRA*)context->target_surface;
 	TPSX_PixelRGBA *ptr_rgba = (TPSX_PixelRGBA*)context->target_surface;
-	if(context->type == TPSX_BGRA)
-	{
-		for(u32 i = 0; i < context->resx * context->resy; i++)
-		{
-			*ptr_bgra = pixel_bgra;
-			ptr_bgra++;
-		}
-	}
-	else
-	{
-		for(u32 i = 0; i < context->resx * context->resy; i++)
-		{
-			*ptr_rgba = pixel_rgba;
-			ptr_rgba++;
-		}
-
-	}
+	memset(context->target_surface, 0, sizeof(TPSX_Pixel32) * context->resx * context->resy);
 }

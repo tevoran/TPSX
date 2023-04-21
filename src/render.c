@@ -59,16 +59,27 @@ static inline void TPSX_RenderTriangle(
 	{
 		bool in_line = false;
 
+		current.y = iy;
+		TPSX_Pixel32 *pixel_ptr = context->target_surface;
+		pixel_ptr += context->resx * iy;
+
 		for(int ix = min.x; ix < max.x; ix++)
 		{
 			current.x = ix;
-			current.y = iy;
 
 			T_vec3 bary = T_get_barycentric_coords(v0, v1, v2, current);
 			if(	bary.x > 0.0f &&
 				bary.y > 0.0f &&
 				bary.z > 0.0f)
 			{
+				if(!in_line)
+				{
+					pixel_ptr+=ix;
+				}
+				else
+				{
+					pixel_ptr++;
+				}
 				in_line = true;
 
 				//do clipping through the near and the far plane
@@ -86,13 +97,18 @@ static inline void TPSX_RenderTriangle(
 
 				if(!tex)
 				{
-					if(context->type == TPSX_BGRA)
+					switch (context->type)
 					{
-						TPSX_DrawPixelBGRA(context, ix, iy, pixel_bgra);
-					}
-					else
-					{
-						TPSX_DrawPixelRGBA(context, ix, iy, pixel_rgba);
+						case TPSX_BGRA:
+						{
+							TPSX_DrawPixelBGRA((void*)pixel_ptr, pixel_bgra);
+							break;
+						}
+						case TPSX_RGBA:
+						{
+							TPSX_DrawPixelRGBA((void*)pixel_ptr, pixel_rgba);
+							break;
+						}
 					}
 				}
 				else
@@ -107,19 +123,24 @@ static inline void TPSX_RenderTriangle(
 						v1_in.tex_coord.v * bary.y +
 						v2_in.tex_coord.v * bary.z;
 
-					if(context->type == TPSX_BGRA)
+					switch(context->type)
 					{
-						TPSX_PixelBGRA texel = TPSX_SampleFromTextureBGRA(
-							tex,
-							tex_pos);
-						TPSX_DrawPixelBGRA(context, ix, iy, texel);
-					}
-					else
-					{
-						TPSX_PixelRGBA texel = TPSX_SampleFromTextureRGBA(
-							tex,
-							tex_pos);
-						TPSX_DrawPixelRGBA(context, ix, iy, texel);
+						case TPSX_BGRA:
+						{
+							TPSX_PixelBGRA texel = TPSX_SampleFromTextureBGRA(
+								tex,
+								tex_pos);
+							TPSX_DrawPixelBGRA((void*)pixel_ptr, texel);
+							break;
+						}
+						case TPSX_RGBA:
+						{
+							TPSX_PixelRGBA texel = TPSX_SampleFromTextureRGBA(
+								tex,
+								tex_pos);
+							TPSX_DrawPixelRGBA((void*)pixel_ptr, texel);
+							break;
+						}
 					}
 				}
 			}

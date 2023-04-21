@@ -3,24 +3,26 @@
 
 #include "tpsx.h"
 
-static inline void TPSX_DrawPixelRGBA(TPSX_Context *context, u16 pos_x, u16 pos_y, TPSX_PixelRGBA pixel)
+#define INV_255 0.00392f //is 1.0f / 255.0f;
+
+static inline void TPSX_DrawPixelRGBA(void *pixel_ptr, TPSX_PixelRGBA pixel)
 {
-    TPSX_PixelRGBA *surface = (TPSX_PixelRGBA*)context->target_surface;
-    surface += pos_y * context->resx + pos_x;
-    surface->r = surface->r * (1.0f - pixel.a * 1.0f/255.0f) + pixel.r * (pixel.a * 1.0f/255.0f);
-    surface->g = surface->g * (1.0f - pixel.a * 1.0f/255.0f) + pixel.g * (pixel.a * 1.0f/255.0f);
-    surface->b = surface->b * (1.0f - pixel.a * 1.0f/255.0f) + pixel.b * (pixel.a * 1.0f/255.0f);
-    surface->a = surface->a * (1.0f - pixel.a * 1.0f/255.0f) + pixel.a * (pixel.a * 1.0f/255.0f);
+    TPSX_PixelRGBA *surface = (TPSX_PixelRGBA*)pixel_ptr;
+    float factor = pixel.a * INV_255;
+    surface->r = surface->r * (1.0f - factor) + pixel.r * factor;
+    surface->g = surface->g * (1.0f - factor) + pixel.g * factor;
+    surface->b = surface->b * (1.0f - factor) + pixel.b * factor;
+    surface->a = surface->a * (1.0f - factor) + pixel.a * factor;
 };
 
-static inline void TPSX_DrawPixelBGRA(TPSX_Context *context, u16 pos_x, u16 pos_y, TPSX_PixelBGRA pixel)
+static inline void TPSX_DrawPixelBGRA(void *pixel_ptr, TPSX_PixelBGRA pixel)
 {
-    TPSX_PixelBGRA *surface = (TPSX_PixelBGRA*)context->target_surface;
-    surface += pos_y * context->resx + pos_x;
-    surface->r = surface->r * (1.0f - pixel.a * 1.0f/255.0f) + pixel.r * (pixel.a * 1.0f/255.0f);
-    surface->g = surface->g * (1.0f - pixel.a * 1.0f/255.0f) + pixel.g * (pixel.a * 1.0f/255.0f);
-    surface->b = surface->b * (1.0f - pixel.a * 1.0f/255.0f) + pixel.b * (pixel.a * 1.0f/255.0f);
-    surface->a = surface->a * (1.0f - pixel.a * 1.0f/255.0f) + pixel.a * (pixel.a * 1.0f/255.0f);
+    TPSX_PixelBGRA *surface = (TPSX_PixelBGRA*)pixel_ptr;
+    float factor = pixel.a * INV_255;
+    surface->r = surface->r * (1.0f - factor) + pixel.r * factor;
+    surface->g = surface->g * (1.0f - factor) + pixel.g * factor;
+    surface->b = surface->b * (1.0f - factor) + pixel.b * factor;
+    surface->a = surface->a * (1.0f - factor) + pixel.a * factor;
 };
 
 #endif /* TPSX_PIXEL_H */

@@ -145,6 +145,7 @@ int main()
 
 		//show the rendered result
 		SDL_UpdateWindowSurface(window);
+		//exit(0);
 	}
 	float ms_after = SDL_GetTicks();
 	float ms = ms_after - ms_before;

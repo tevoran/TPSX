@@ -36,9 +36,5 @@ void TPSX_DestroyContext(TPSX_Context **context)
 /* it might be necessary to set a certain alpha value if issues arise */
 void TPSX_ClearRenderTarget(TPSX_Context *context)
 {
-	TPSX_PixelBGRA pixel_bgra = {0,0,0,0};
-	TPSX_PixelRGBA pixel_rgba = {0,0,0,0};
-	TPSX_PixelBGRA *ptr_bgra = (TPSX_PixelBGRA*)context->target_surface;
-	TPSX_PixelRGBA *ptr_rgba = (TPSX_PixelRGBA*)context->target_surface;
 	memset(context->target_surface, 0, sizeof(TPSX_Pixel32) * context->resx * context->resy);
 }
